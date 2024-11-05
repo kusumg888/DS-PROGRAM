@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 20</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>20. Rotten oranges.
+        Explanation :
+        Given a grid of dimension nxm where each cell in the grid can have values 0, 1 or 2 which has the following meaning: 0 : Empty cell 1 : Cells have fresh oranges 2 : Cells have rotten oranges We have to determine what is the earliest time after which all the oranges are rotten. A rotten orange at index [i,j] can rot other fresh orange at indexes [i-1,j], [i+1,j], [i,j-1], [i,j+1] (up, down, left and right) in unit time. Example 1: Input: grid = {{0,1,2},{0,1,2},{2,1,1}} Output: 1 Explanation: The grid is- 0 1 2 0 1 2 2 1 1 Oranges at positions (0,2), (1,2), (2,0) will rot oranges at (0,1), (1,1), (2,2) and (2,1) in unit time. Example 2: Input: grid = {{2,2,0,1}} Output: -1 Explanation: The grid is- 2 2 0 1 Oranges at (0,0) and (0,1) can't rot orange at (0,3).
+    </h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+            #include <stdlib.h>
+            
+            #define MAX 100
+            
+            typedef struct {
+                int x;
+                int y;
+            } Point;
+            
+            int directions[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+            
+            int isValid(int x, int y, int n, int m) {
+                return (x >= 0 && x < n && y >= 0 && y < m);
+            }
+            
+            int rotOranges(int grid[MAX][MAX], int n, int m) {
+                int time = -1;
+                int freshCount = 0;
+                Point queue[MAX * MAX]; 
+                int front = 0, rear = 0;
+            
+                for (int i = 0; i < n; i++) {
+                    for (int j = 0; j < m; j++) {
+                        if (grid[i][j] == 2) {
+                            queue[rear++] = (Point){i, j};
+                        } else if (grid[i][j] == 1) {
+                            freshCount++;
+                        }
+                    }
+                }
+            
+                while (front < rear) {
+                    int size = rear - front; 
+                    time++;
+                    
+                    for (int i = 0; i < size; i++) {
+                        Point current = queue[front++];
+                        
+                        for (int d = 0; d < 4; d++) {
+                            int newX = current.x + directions[d][0];
+                            int newY = current.y + directions[d][1];
+                            
+                            if (isValid(newX, newY, n, m) && grid[newX][newY] == 1) {
+                                grid[newX][newY] = 2; 
+                                queue[rear++] = (Point){newX, newY};
+                                freshCount--; 
+                            }
+                        }
+                    }
+                }
+            
+                return freshCount == 0 ? time : -1;
+            }
+            
+            int main() {
+                int n, m;
+                int grid[MAX][MAX];
+            
+                printf("Enter the dimensions of the grid (n m): ");
+                scanf("%d %d", &n, &m);
+            
+                printf("Enter the grid values (0 for empty, 1 for fresh orange, 2 for rotten orange):\n");
+                for (int i = 0; i < n; i++) {
+                    for (int j = 0; j < m; j++) {
+                        scanf("%d", &grid[i][j]);
+                    }
+                }
+            
+                int result = rotOranges(grid, n, m);
+                
+                printf("The earliest time after which all oranges are rotten: %d\n", result);
+            
+                return 0;
+            }
+            
+            
+            
+            
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        Enter the dimensions of the grid (n m): 3 3
+        Enter the grid values (0 for empty, 1 for fresh orange, 2 for rotten orange):
+        0 1 2 
+        0 1 2
+        2 1 1
+        The earliest time after which all oranges are rotten: 1
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 1</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>1. Enter the string from user and convert in uppercase.</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+
+            int main() {
+                char string[100];
+            
+                printf("Enter a string: ");
+                gets(string);
+              
+                for (int i = 0; string[i] != '\0'; i++) 
+                {
+                    if (string[i] >= 'a' && string[i] <= 'z') {
+                     
+                       string[i] = string[i] - 32;
+                    }
+                }
+                printf("Uppercase string: %s", string); 
+            
+                return 0;
+            }
+            
+      
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        Enter a string: kusum
+        Uppercase string: KUSUM
+
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 16</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>16. Enter two arrays from the user and check they are same or not?</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+
+            int main() {
+                int arr1[50], arr2[50];
+                int n1, n2;
+                printf("Enter the number of elements in the first array: ");
+                scanf("%d", &n1);
+                
+                printf("Enter %d elements for the first array:\n", n1);
+                for (int i = 0; i < n1; i++) {
+                    scanf("%d", &arr1[i]);
+                }
+            
+                printf("Enter the number of elements in the second array: ");
+                scanf("%d", &n2);
+                
+                
+                printf("Enter %d elements for the second array:\n", n2);
+                for (int i = 0; i < n2; i++) {
+                    scanf("%d", &arr2[i]);
+                }
+            
+                if (n1 != n2) {
+                    printf("The arrays are not the same (different sizes).\n");
+                } else {
+                    int areSame = 1; 
+                    for (int i = 0; i < n1; i++) {
+                        if (arr1[i] != arr2[i]) {
+                            areSame = 0; 
+                            break;
+                        }
+                    }
+                    if (areSame) {
+                        printf("The arrays are the same.\n");
+                    } else {
+                        printf("The arrays are not the same (different elements).\n");
+                    }
+                }
+            
+                return 0; 
+            }
+            
+      
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        Enter the number of elements in the first array: 5
+        Enter 5 elements for the first array:
+        8
+        6
+        9
+        3
+        1
+        Enter the number of elements in the second array: 4
+        Enter 4 elements for the second array:
+        2
+        1
+        5
+        9
+        The arrays are not the same (different sizes).
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

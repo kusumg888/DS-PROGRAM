@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 2</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>2. Enter a string from the user, enter a character and perform linear search algorithm through recursion.</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+
+            int linearSearch(char str[], char target, int index) {
+                
+                if (str[index] == '\0') {
+                    return -1; 
+                }
+                if (str[index] == target) {
+                    return index; 
+                }
+                return linearSearch(str, target, index + 1);
+            }
+            
+            int main() {
+                char str[100]; 
+                char target;
+                printf("Enter a string: ");
+                fgets(str, sizeof(str), stdin); 
+                printf("Enter a character to search for: ");
+                scanf(" %c", &target); 
+                int result = linearSearch(str, target, 0);
+            
+                if (result != -1) {
+                    printf("Character '%c' found at index %d.\n", target, result);
+                } else {
+                    printf("Character '%c' not found in the string.\n", target);
+                }
+                return 0; 
+            }
+            
+
+      
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        Enter a string: program ab
+        Enter a character to search for: a
+        Character 'a' found at index 5.
+        
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

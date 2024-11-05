@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 8</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>8. Implement the operations of priority queue in a string array (insert, delete, peek, isEmpty, isFull).</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+            #include <stdlib.h>
+            #include <string.h>
+            
+            #define MAX 5
+            
+            struct PriorityQueue {
+                char items[MAX][100];
+                int size;
+            };
+            
+            struct PriorityQueue* createQueue() {
+                struct PriorityQueue* pq = (struct PriorityQueue*)malloc(sizeof(struct PriorityQueue));
+                pq->size = 0;
+                return pq;
+            }
+            
+            int isEmpty(struct PriorityQueue* pq) {
+                return pq->size == 0;
+            }
+            
+            int isFull(struct PriorityQueue* pq) {
+                return pq->size == MAX;
+            }
+            
+            void insert(struct PriorityQueue* pq, char* value) {
+                if (isFull(pq)) {
+                    printf("Queue is full. Cannot insert '%s'.\n", value);
+                    return;
+                }
+                int i;
+                for (i = pq->size - 1; (i >= 0 && strcmp(pq->items[i], value) < 0); i--) {
+                    strcpy(pq->items[i + 1], pq->items[i]);
+                }
+                strcpy(pq->items[i + 1], value);
+                pq->size++;
+                printf("Inserted '%s'\n", value);
+            }
+            
+            char* delete(struct PriorityQueue* pq) {
+                if (isEmpty(pq)) {
+                    printf("Queue is empty. Cannot delete.\n");
+                    return NULL;
+                }
+                return pq->items[--pq->size];
+            }
+            
+            char* peek(struct PriorityQueue* pq) {
+                if (isEmpty(pq)) {
+                    printf("Queue is empty. Cannot peek.\n");
+                    return NULL;
+                }
+                return pq->items[pq->size - 1];
+            }
+            
+            int main() {
+                struct PriorityQueue* pq = createQueue();
+                int choice;
+                char value[100];
+            
+                while (1) {
+                    printf("\n1. Insert\n2. Delete\n3. Peek\n4. Exit\n");
+                    printf("Enter your choice: ");
+                    scanf("%d", &choice);
+                    getchar(); 
+            
+                    switch (choice) {
+                        case 1:
+                            printf("Enter string to insert: ");
+                            gets(value);
+                            value[strcspn(value, "\n")] = 0; 
+                            insert(pq, value);
+                            break;
+                        case 2:
+                            char* deletedValue = delete(pq);
+                            if (deletedValue) {
+                                printf("Deleted: '%s'\n", deletedValue);
+                            }
+                            break;
+                        case 3:
+                            char* peekedValue = peek(pq);
+                            if (peekedValue) {
+                                printf("Highest priority element: '%s'\n", peekedValue);
+                            }
+                            break;
+                        case 4:
+                            free(pq);
+                            exit(0);
+                        default:
+                            printf("Invalid choice.\n");
+                    }
+                }
+                return 0;
+            }
+            
+            
+            
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        1. Insert
+        2. Delete
+        3. Peek
+        4. Exit
+        Enter your choice: 2
+        Queue is empty. Cannot delete.
+        
+        1. Insert
+        2. Delete
+        3. Peek
+        4. Exit
+        Enter your choice: 1
+        Enter string to insert: 34
+        Inserted '34'
+        
+        1. Insert
+        2. Delete
+        3. Peek
+        4. Exit
+        Enter your choice: 3
+        Highest priority element: '34'
+        
+        1. Insert
+        2. Delete
+        3. Peek
+        4. Exit
+        Enter your choice: 4
+        
+        
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

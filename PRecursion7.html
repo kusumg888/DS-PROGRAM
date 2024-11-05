@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 7</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>7. Enter the number from the user and add all digits of the number using recursion.</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h >
+
+        int sumOfDigits(int n) {
+            if (n == 0) 
+                return 0;
+            else
+                return (n % 10) + sumOfDigits(n / 10); 
+        }
+                            
+        int main() {
+            int num;
+            printf("Enter a number: ");
+            scanf("%d", &num);
+                            
+            int sum = sumOfDigits(num < 0 ? -num : num);
+            printf("Sum of digits of %d is: %d\n", num, sum);
+                            
+            return 0;
+        }
+                                            
+                 
+    
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        Enter a number: 1234
+        Sum of digits of 1234 is: 10
+
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

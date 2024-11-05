@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 18</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>18. Reverse first K elements of queue.
+        Explanation :
+        Given an integer K and a queue of integers, we need to reverse the order of the first K elements of the queue, leaving the other elements in the same relative order. Only following standard operations are allowed on queue. enqueue(x) : Add an item x to rear of queue dequeue() : Remove an item from front of queue size() : Returns number of elements in queue. front() : Finds front item. Note: The above operations represent the general processings. In-built functions of the respective languages can be used to solve the problem. Example 1: Input: 5 3 1 2 3 4 5 Output: 3 2 1 4 5 Explanation: After reversing the given input from the 3rd position the resultant output will be 3 2 1 4 5. Example 2: Input: 4 4 4 3 2 1 Output: 1 2 3 4 Explanation: After reversing the given input from the 4th position the resultant output will be 1 2 3 4.
+    </h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+            #include <stdlib.h>
+            
+            #define MAX 100
+            
+            struct Queue {
+                int items[MAX];
+                int front;
+                int rear;
+            };
+            struct Queue* createQueue() {
+                struct Queue* q = (struct Queue*)malloc(sizeof(struct Queue));
+                q->front = -1;
+                q->rear = -1;
+                return q;
+            }
+            
+            int isEmpty(struct Queue* q) {
+                return q->front == -1;
+            }
+            int isFull(struct Queue* q) {
+                return q->rear == MAX - 1;
+            }
+            void enqueue(struct Queue* q, int value) {
+                if (isFull(q)) {
+                    printf("Queue is full. Cannot insert %d.\n", value);
+                    return;
+                }
+                if (isEmpty(q)) {
+                    q->front = 0;
+                }
+                q->rear++;
+                q->items[q->rear] = value;
+            }
+            
+            int dequeue(struct Queue* q) {
+                if (isEmpty(q)) {
+                    printf("Queue is empty. Cannot dequeue.\n");
+                    return -1;
+                }
+                int item = q->items[q->front];
+                if (q->front >= q->rear) {
+                    q->front = -1;
+                    q->rear = -1;
+                } else {
+                    q->front++;
+                }
+                return item;
+            }
+            
+            void reverseFirstK(struct Queue* q, int k) {
+                if (isEmpty(q) || k <= 0 || k > (q->rear - q->front + 1)) {
+                    printf("Invalid K or empty queue.\n");
+                    return;
+                }
+            
+                int stack[MAX];
+                int top = -1;
+            
+                for (int i = 0; i < k; i++) {
+                    stack[++top] = dequeue(q);
+                } 
+                while (top != -1) {
+                    enqueue(q, stack[top--]);
+                }
+                int size = (q->rear - q->front + 1) - k;
+                for (int i = 0; i < size; i++) {
+                    enqueue(q, dequeue(q));
+                }
+            }
+            
+            void display(struct Queue* q) {
+                if (isEmpty(q)) {
+                    printf("Queue is empty.\n");
+                    return;
+                }
+                for (int i = q->front; i <= q->rear; i++) {
+                    printf("%d ", q->items[i]);
+                }
+                printf("\n");
+            }
+            
+            int main() {
+                struct Queue* q = createQueue();
+                int n, k, value;
+            
+                printf("Enter number of elements in the queue: ");
+                scanf("%d", &n);
+                printf("Enter the elements: ");
+                for (int i = 0; i < n; i++) {
+                    scanf("%d", &value);
+                    enqueue(q, value);
+                }
+            
+                printf("Enter the value of K: ");
+                scanf("%d", &k);
+                reverseFirstK(q, k);
+                printf("Queue after reversing first %d elements: ", k);
+                display(q);
+            
+                free(q);
+                return 0;
+            }
+            
+            
+            
+            
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        Enter number of elements in the queue: 5
+        Enter the elements: 10 20 30 40 50
+        Enter the value of K: 3
+        Queue after reversing first 3 elements: 30 20 10 40 50 
+        
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

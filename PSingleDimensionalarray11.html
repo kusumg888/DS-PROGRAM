@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 11</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>11. Enter an array from user and find the duplicate values?</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+
+            int main() {
+                int arr[50]; 
+                int n, i,j;
+                printf("Enter the number of elements in the array: ");
+                scanf("%d", &n);
+                printf("Enter %d elements:\n", n);
+                for (i = 0; i < n; i++) {
+                    scanf("%d", &arr[i]);
+                }
+                
+                printf("The dublicate value of the array are:\n");
+                for (i= 0; i < n; i++) {
+                    for (j= i+1; j < n; j++)
+                    {
+                       if(arr[i]==arr[j])
+                      {
+                        printf("%d ",arr[i]);
+                        break;
+                      }
+                    }
+                }
+                 
+                printf("\n"); 
+                return 0; 
+            }
+            
+            
+      
+      
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        Enter the number of elements in the array: 5
+        Enter 5 elements:
+        3
+        9
+        7
+        5
+        9
+        The dublicate value of all the array are:
+        9 
+
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

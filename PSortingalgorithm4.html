@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 4</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>4. Enter a integer array from the user and perform bubble sort algorithm through recursion. Also calculate the worst and best complexity with exact time.</h1>
+    <h3>Code:</h3>
+    <pre>
+      
+        #include <stdio.h>
+            #include <time.h>
+            
+            void bubbleSortRecursive(int arr[], int n)
+            {
+                if (n == 1) 
+                return;
+                for (int i = 0; i < n - 1; i++) {
+                    if (arr[i] > arr[i + 1]) {
+                        int temp = arr[i];
+                        arr[i] = arr[i + 1];
+                        arr[i + 1] = temp;
+                    }
+                }
+                
+                bubbleSortRecursive(arr, n - 1);
+            }
+            
+            void printArray(int arr[], int n) {
+                for (int i = 0; i < n; i++) {
+                    printf("%d ", arr[i]);
+                }
+                printf("\n");
+            }
+            
+            int main() {
+                int n;
+                printf("Enter the number of elements: ");
+                scanf("%d", &n);
+                int arr[n];
+                printf("Enter %d integers:\n", n);
+                for (int i = 0; i < n; i++) {
+                    scanf("%d", &arr[i]);
+                }
+            
+                clock_t start = clock();
+                bubbleSortRecursive(arr, n);
+                clock_t end = clock();
+                double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
+            
+                printf("Sorted array:\n");
+                printArray(arr, n);
+                printf("Time taken for bubble sort (worst case): %f seconds\n", time_taken);
+            
+                // Best case: sorted array
+                // Reset the array for best-case scenario
+                printf("Enter %d integers for best case (sorted input):\n", n);
+                for (int i = 0; i < n; i++) {
+                    arr[i] = i; 
+                }
+                start = clock();
+                bubbleSortRecursive(arr, n);
+                end = clock();
+                time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
+                printf("Sorted array (best case):\n");
+                printArray(arr, n);
+                printf("Time taken for bubble sort (best case): %f seconds\n", time_taken);
+                
+                return 0;
+            }
+       
+      
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        Enter the number of elements: 5
+        Enter 5 integers:
+        57
+        8
+        34
+        45
+        23
+        Sorted array:
+        8 23 34 45 57 
+        Time taken for bubble sort (worst case): 0.000001 seconds
+        Enter 5 integers for best case (sorted input):
+        Sorted array (best case):
+        0 1 2 3 4 
+        Time taken for bubble sort (best case): 0.000001 seconds
+
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

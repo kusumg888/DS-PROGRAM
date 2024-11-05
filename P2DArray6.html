@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 6</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>6. Enter the matrix from user, multiply it with a scalar value and display the answer.</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+
+            int main() {
+                int rows, cols, scalar;
+                            
+                printf("Enter the number of rows: ");
+                scanf("%d", &rows);
+                printf("Enter the number of columns: ");
+                scanf("%d", &cols);
+                            
+                int matrix[rows][cols];
+                            
+                printf("Enter elements of the matrix:\n");
+                for (int i = 0; i < rows; i++) {
+                    for (int j = 0; j < cols; j++) {
+                        printf("Enter element at position [%d][%d]: ", i, j);
+                        scanf("%d", &matrix[i][j]);
+                    }
+                }
+                            
+                printf("Enter the scalar value to multiply: ");
+                scanf("%d", &scalar);
+                            
+                for (int i = 0; i < rows; i++) {
+                    for (int j = 0; j < cols; j++) {
+                    matrix[i][j] *= scalar;
+                    }
+                }
+                printf("Resultant matrix after multiplication by scalar %d:\n", scalar);
+                for (int i = 0; i < rows; i++) {
+                    for (int j = 0; j < cols; j++) {
+                        printf("%d ", matrix[i][j]);
+                    }
+                    printf("\n");
+                }
+                            
+                return 0;
+            }
+     
+
+
+        
+    </pre>
+    <h3>Output:</h3>
+    <pre> 
+        Enter the number of rows: 2
+        Enter the number of columns: 3
+        Enter elements of the matrix:
+        Enter element at position [0][0]: 1
+        Enter element at position [0][1]: 5
+        Enter element at position [0][2]: 4
+        Enter element at position [1][0]: 9
+        Enter element at position [1][1]: 7
+        Enter element at position [1][2]: 8
+        Enter the scalar value to multiply: 6
+        Resultant matrix after multiplication by scalar 6:
+        6 30 24 
+        54 42 48  
+
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 4</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>4. Traverse the adjacent list with depth first search.</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+            #include <stdlib.h>
+                            
+            #define MAX 5 
+            
+            struct Node {
+                int vertex;
+                struct Node* next;
+            };
+                           
+            struct Node* adjList[MAX];
+            int visited[MAX];                ;
+            
+            struct Node* createNode(int v) {
+                struct Node* newNode = malloc(sizeof(struct Node));
+                newNode->vertex = v;
+                newNode->next = NULL;
+                return newNode;
+            }
+                            
+            void addEdge(int src, int dest) {
+                struct Node* newNode = createNode(dest);
+                newNode->next = adjList[src];
+                adjList[src] = newNode;
+    
+                newNode = createNode(src);
+                newNode->next = adjList[dest];
+                adjList[dest] = newNode;
+            }               
+                            
+            void dfs(int vertex) {
+                printf("%d ", vertex);       
+                visited[vertex] = 1;                         
+                struct Node* temp = adjList[vertex];  
+                while (temp != NULL) {
+                    int adjVertex = temp->vertex;
+                    if (!visited[adjVertex]) {  
+                        dfs(adjVertex);         
+                    }
+                    temp = temp->next;
+                }
+            }            
+            
+            int main() {
+                for (int i = 0; i < MAX; i++) {
+                    visited[i] = 0;
+                    adjList[i] = NULL;
+                }
+                addEdge(0, 1);
+                addEdge(0, 4);
+                addEdge(1, 2);
+                addEdge(1, 3);
+                addEdge(1, 4);
+                addEdge(2, 3);
+                addEdge(3, 4);
+            
+                printf("DFS Traversal starting from vertex 0:\n");
+                dfs(0);
+            
+                return 0;
+            }
+            
+    
+        
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        DFS Traversal starting from vertex 0:
+        0 4 3 2 1 
+
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

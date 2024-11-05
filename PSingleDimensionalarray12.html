@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 12</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>12. Enter an array from user and remove the duplicate values and fill with zero?</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+
+            int main() {
+                int arr[50]; 
+                int n, i,j;
+                printf("Enter the number of elements in the array: ");
+                scanf("%d", &n);
+                printf("Enter %d elements:\n", n);
+                for (i = 0; i < n; i++) {
+                    scanf("%d", &arr[i]);
+                }
+                
+              
+                for (i= 0; i < n; i++) {
+                    for (j= i+1; j < n; j++)
+                    {
+                       if(arr[i]==arr[j])
+                      {
+                          arr[j]=0;
+                      }
+                    }
+                }
+                 printf("The array after removing duplicates and filling with zeros is:\n");
+                for (i = 0; i < n; i++) {
+                    printf("%d ", arr[i]);
+                }
+                
+                 
+                printf("\n"); 
+                return 0; 
+            }
+            
+            
+      
+      
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        Enter the number of elements in the array: 5
+        Enter 5 elements:
+        8
+        4
+        6
+        7
+        6
+        The array after removing duplicates and filling with zeros is:
+        8 4 6 7 0 
+
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

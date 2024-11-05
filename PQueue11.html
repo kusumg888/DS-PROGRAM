@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 11</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>11. Implement the operations of priority queue dynamically of integers (insert, delete, peek, isEmpty, isFull).</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+            #include <stdlib.h>
+            
+            struct PriorityQueue {
+                int* items;    
+                int capacity;   
+                int size;       
+            };
+            
+            struct PriorityQueue* createPriorityQueue(int capacity) {
+                struct PriorityQueue* pq = (struct PriorityQueue*)malloc(sizeof(struct PriorityQueue));
+                pq->capacity = capacity;
+                pq->size = 0;
+                pq->items = (int*)malloc(capacity * sizeof(int));
+                return pq;
+            }
+            
+            int isEmpty(struct PriorityQueue* pq) {
+                return pq->size == 0;
+            }
+            
+            int isFull(struct PriorityQueue* pq) {
+                return pq->size == pq->capacity;
+            }
+            
+            void insert(struct PriorityQueue* pq, int value) {
+                if (isFull(pq)) {
+                    printf("Priority Queue is full. Cannot insert %d.\n", value);
+                    return;
+                }
+                pq->items[pq->size] = value;
+                pq->size++;
+            
+                for (int i = pq->size - 1; i > 0; i--) {
+                    if (pq->items[i] > pq->items[i - 1]) {
+                        int temp = pq->items[i];
+                        pq->items[i] = pq->items[i - 1];
+                        pq->items[i - 1] = temp;
+                    } else {
+                        break; 
+                    }
+                }
+                printf("Inserted %d\n", value);
+            }
+            
+            int delete(struct PriorityQueue* pq) {
+                if (isEmpty(pq)) {
+                    printf("Priority Queue is empty. Cannot delete.\n");
+                    return -1;
+                }
+                int highestPriority = pq->items[0]; 
+                for (int i = 1; i < pq->size; i++) {
+                    pq->items[i - 1] = pq->items[i]; 
+                }
+                pq->size--; 
+                printf("Deleted %d\n", highestPriority);
+                return highestPriority;
+            }
+            
+            int peek(struct PriorityQueue* pq) {
+                if (isEmpty(pq)) {
+                    printf("Priority Queue is empty. Cannot peek.\n");
+                    return -1; 
+                }
+                return pq->items[0]; 
+            }
+            
+            void freePriorityQueue(struct PriorityQueue* pq) {
+                free(pq->items);
+                free(pq);
+            }
+            
+            int main() {
+                struct PriorityQueue* pq = createPriorityQueue(5);
+                int choice, value;
+            
+                while (1) {
+                    printf("\n1. Insert\n2. Delete\n3. Peek\n4. Exit\n");
+                    printf("Enter your choice: ");
+                    scanf("%d", &choice);
+            
+                    switch (choice) {
+                        case 1:
+                            printf("Enter integer to insert: ");
+                            scanf("%d", &value);
+                            insert(pq, value);
+                            break;
+                        case 2:
+                            delete(pq);
+                            break;
+                        case 3:
+                            value = peek(pq);
+                            if (value != -1) {
+                                printf("Highest priority element: %d\n", value);
+                            }
+                            break;
+                        case 4:
+                            freePriorityQueue(pq);
+                            exit(0);
+                        default:
+                            printf("Invalid choice. Please try again.\n");
+                    }
+                }
+            
+                return 0;
+            }
+            
+            
+            
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+
+        1. Insert
+        2. Delete
+        3. Peek
+        4. Exit
+        Enter your choice: 189
+        Enter integer to insert: 89
+        Inserted 89
+        
+        1. Insert
+        2. Delete
+        3. Peek
+        4. Exit
+        Enter your choice: 2
+        Deleted 89
+        
+        1. Insert
+        2. Delete
+        3. Peek
+        4. Exit
+        Enter your choice: 4
+        
+        
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

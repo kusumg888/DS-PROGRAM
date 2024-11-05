@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 7</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>7. Enter an integer array from the user, enter an integer value and perform binary search algorithm through recursion.</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+
+            int binarySearch(int arr[], int left, int right, int target) {
+              
+                if (left > right) {
+                    return -1; 
+                }
+            
+                int mid = left + (right - left) / 2; 
+                if (arr[mid] == target) {
+                    return mid; 
+                }
+            
+                if (arr[mid] > target) {
+                    return binarySearch(arr, left, mid - 1, target);
+                }
+                
+                return binarySearch(arr, mid + 1, right, target);
+            }
+            void bubbleSort(int arr[], int size) {
+                for (int i = 0; i < size - 1; i++) {
+                    for (int j = 0; j < size - i - 1; j++) {
+                        if (arr[j] > arr[j + 1]) {
+                           
+                            int temp = arr[j];
+                            arr[j] = arr[j + 1];
+                            arr[j + 1] = temp;
+                        }
+                    }
+                }
+            }
+            
+            int main() {
+                int size, target;
+            
+                printf("Enter the size of the array: ");
+                scanf("%d", &size);
+            
+                int arr[size];
+            
+                printf("Enter %d elements:\n", size);
+                for (int i = 0; i < size; i++) {
+                    scanf("%d", &arr[i]);
+                }
+            
+                bubbleSort(arr, size);
+            
+                printf("Enter the integer value to search for: ");
+                scanf("%d", &target);
+            
+                int result = binarySearch(arr, 0, size - 1, target);
+            
+                if (result != -1) {
+                    printf("Element %d found at index %d.\n", target, result);
+                } else {
+                    printf("Element %d not found in the array.\n", target);
+                }
+            
+                return 0; 
+            }
+            
+
+      
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        Enter the size of the array: 5
+        Enter 5 elements:
+        3
+        8
+        9
+        1
+        2
+        Enter the integer value to search for: 1
+        Element 1 found at index 0.
+        
+        
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

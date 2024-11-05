@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 1</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>1. Enter a matrix of 4 rows and 2 columns from the user display it in matrix format.</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include < stdio.h >
+
+        int main() {
+        int matrix[4][2];
+        printf("Enter elements for a 4x2 matrix:\n");
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 2; j++) {
+                printf("Enter element at [%d][%d]: ", i, j);
+                scanf("%d", &matrix[i][j]);
+            }
+        }
+        printf("\nThe 4x2 matrix is:\n");
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 2; j++) {
+                printf("%d ", matrix[i][j]);
+            }
+            printf("\n");
+        }
+        return 0;
+        }
+                    
+                     
+        
+        
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        Enter elements for a 4x2 matrix:
+        Enter element at [0][0]: 2
+        Enter element at [0][1]: 4
+        Enter element at [1][0]: 9
+        Enter element at [1][1]: 7
+        Enter element at [2][0]: 8
+        Enter element at [2][1]: 6
+        Enter element at [3][0]: 3
+        Enter element at [3][1]: 5
+        
+        The 4x2 matrix is:
+        2 4 
+        9 7 
+        8 6 
+        3 5
+    
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

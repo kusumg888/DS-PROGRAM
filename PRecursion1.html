@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 1</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>1. Calculate factorial of a number using recursion.</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h >
+
+        int factorial(int n) {
+            if (n <= 1) 
+                return 1;
+            else
+                return n * factorial(n - 1); 
+        }
+                            
+        int main() {
+            int num;
+            printf("Enter a positive integer: ");
+            scanf("%d", &num);
+                            
+            if (num <0)
+             {
+                printf(" Factorial of a negative number doesn't exist.\n" );
+                }
+             else 
+            {
+                 printf(" Factorial of %d is %d\n", num, factorial(num));
+                }
+            return 0;
+        }
+        
+    
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        Enter a positive integer: 5
+        Factorial of 5 is 120
+
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

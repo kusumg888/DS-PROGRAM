@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 15</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>15. Enter an array from user and print all the palindrome numbers?</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+
+            int isPalindrome(int num) {
+                int reversed = 0, original = num, remainder;
+                
+                if (num < 0) return 0;
+            
+                while (num != 0) {
+                    remainder = num % 10;
+                    reversed = reversed * 10 + remainder;
+                    num /= 10;
+                }
+                
+                return original == reversed;
+            }
+            
+            int main() {
+                int arr[50];
+                int n;
+                printf("Enter the number of elements in the array: ");
+                scanf("%d", &n);
+            
+                if (n > 50 || n <= 0) {
+                    printf("Invalid number of elements!\n");
+                    return 1; 
+                }
+            
+                printf("Enter %d elements:\n", n);
+                for (int i = 0; i < n; i++) {
+                    scanf("%d", &arr[i]);
+                }
+            
+                printf("Palindrome numbers in the array are:\n");
+                int found = 0; 
+                for (int i = 0; i < n; i++) {
+                    if (isPalindrome(arr[i])) {
+                        printf("%d ", arr[i]);
+                        found = 1; 
+                    }
+                }
+            
+                if (!found) {
+                    printf("No palindrome numbers found.\n");
+                }
+            
+                printf("\n");
+                return 0; 
+            }
+            
+      
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        Enter the number of elements in the array: 6
+        Enter 6 elements:
+        4
+        8
+        2
+        9
+        8
+        9
+        Palindrome numbers in the array are:
+        4 8 2 9 8 9 
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

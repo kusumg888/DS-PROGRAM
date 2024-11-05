@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 6</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>6. Find the smallest element in the integer array using recursion.</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include 
+
+        int findSmallest(int arr[], int n) {
+            if (n == 1)
+                return arr[0];
+            int min_in_rest = findSmallest(arr, n - 1);
+            return (arr[n - 1] < min_in_rest) ? arr[n - 1] : min_in_rest;
+        }
+                            
+        int main() {
+            int arr[] = {3, 5, 7, 2, 8, 6};
+            int n = sizeof(arr) / sizeof(arr[0]);
+                            
+            int smallest = findSmallest(arr, n);
+            printf("The smallest element in the array is: %d\n", smallest);
+                            
+            return 0;
+        }                          
+        
+           
+    
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        The smallest element in the array is: 2 
+
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

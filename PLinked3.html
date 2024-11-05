@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 3</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>3. Implement the operations of doubly linked list storing integer values (insert at begin, insert at pos, insert at end, delete at begin, delete at end, delete at pos, isEmpty, isFull, display, search).</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+            #include <stdlib.h>
+            
+            struct Node {
+                int data;
+                struct Node* next;
+                struct Node* prev;
+            };
+            
+            struct DoublyLinkedList {
+                struct Node* head;
+            };
+            
+            struct DoublyLinkedList* createList() {
+                struct DoublyLinkedList* list = (struct DoublyLinkedList*)malloc(sizeof(struct DoublyLinkedList));
+                if (list == NULL) {
+                    printf("Memory allocation failed.\n");
+                    exit(1);
+                }
+                list->head = NULL;
+                return list;
+            }
+            
+            int isEmpty(struct DoublyLinkedList* list) {
+                return list->head == NULL;
+            }
+            
+            void insertAtBeginning(struct DoublyLinkedList* list, int value) {
+                struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                if (newNode == NULL) {
+                    printf("Memory allocation failed.\n");
+                    return;
+                }
+                newNode->data = value;
+                newNode->next = list->head;
+                newNode->prev = NULL;
+            
+                if (list->head != NULL) {
+                    list->head->prev = newNode;
+                }
+                list->head = newNode;
+            }
+            
+            void insertAtPosition(struct DoublyLinkedList* list, int value, int pos) {
+                if (pos < 0) {
+                    printf("Invalid position. Must be non-negative.\n");
+                    return;
+                }
+            
+                if (pos == 0) {
+                    insertAtBeginning(list, value);
+                    return;
+                }
+            
+                struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                if (newNode == NULL) {
+                    printf("Memory allocation failed.\n");
+                    return;
+                }
+                newNode->data = value;
+            
+                struct Node* current = list->head;
+                for (int i = 0; i < pos - 1 && current != NULL; i++) {
+                    current = current->next;
+                }
+            
+                if (current == NULL) {
+                    printf("Position out of bounds. Inserting at the end instead.\n");
+                    insertAtEnd(list, value);
+                    free(newNode);
+                    return;
+                }
+            
+                newNode->next = current->next;
+                newNode->prev = current;
+            
+                if (current->next != NULL) {
+                    current->next->prev = newNode;
+                }
+                current->next = newNode;
+            }
+            
+            void insertAtEnd(struct DoublyLinkedList* list, int value) {
+                struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                if (newNode == NULL) {
+                    printf("Memory allocation failed.\n");
+                    return;
+                }
+                newNode->data = value;
+                newNode->next = NULL;
+            
+                if (isEmpty(list)) {
+                    newNode->prev = NULL;
+                    list->head = newNode;
+                } else {
+                    struct Node* current = list->head;
+                    while (current->next != NULL) {
+                        current = current->next;
+                    }
+                    current->next = newNode;
+                    newNode->prev = current;
+                }
+            }
+            
+            void deleteAtBeginning(struct DoublyLinkedList* list) {
+                if (isEmpty(list)) {
+                    printf("List is empty. Nothing to delete.\n");
+                    return;
+                }
+            
+                struct Node* temp = list->head;
+                list->head = list->head->next;
+            
+                if (list->head != NULL) {
+                    list->head->prev = NULL;
+                }
+                free(temp);
+            }
+            
+            void deleteAtEnd(struct DoublyLinkedList* list) {
+                if (isEmpty(list)) {
+                    printf("List is empty. Nothing to delete.\n");
+                    return;
+                }
+            
+                struct Node* current = list->head;
+                if (current->next == NULL) { // Only one element
+                    free(current);
+                    list->head = NULL;
+                    return;
+                }
+            
+                while (current->next != NULL) {
+                    current = current->next;
+                }
+            
+                current->prev->next = NULL;
+                free(current);
+            }
+            
+            // Function to delete a node at a specific position
+            void deleteAtPosition(struct DoublyLinkedList* list, int pos) {
+                if (isEmpty(list)) {
+                    printf("List is empty. Nothing to delete.\n");
+                    return;
+                }
+            
+                if (pos < 0) {
+                    printf("Invalid position. Must be non-negative.\n");
+                    return;
+                }
+            
+                if (pos == 0) {
+                    deleteAtBeginning(list);
+                    return;
+                }
+            
+                struct Node* current = list->head;
+                for (int i = 0; i < pos && current != NULL; i++) {
+                    current = current->next;
+                }
+            
+                if (current == NULL) {
+                    printf("Position out of bounds.\n");
+                    return;
+                }
+            
+                if (current->prev != NULL) {
+                    current->prev->next = current->next;
+                }
+                if (current->next != NULL) {
+                    current->next->prev = current->prev;
+                }
+                free(current);
+            }
+            
+            void display(struct DoublyLinkedList* list) {
+                if (isEmpty(list)) {
+                    printf("List is empty.\n");
+                    return;
+                }
+                struct Node* current = list->head;
+                while (current != NULL) {
+                    printf("%d <-> ", current->data);
+                    current = current->next;
+                }
+                printf("NULL\n");
+            }
+            int search(struct DoublyLinkedList* list, int value) {
+                struct Node* current = list->head;
+                while (current != NULL) {
+                    if (current->data == value) {
+                        return 1; // Found
+                    }
+                    current = current->next;
+                }
+                return 0; 
+            }
+            
+            void freeList(struct DoublyLinkedList* list) {
+                struct Node* current = list->head;
+                while (current != NULL) {
+                    struct Node* nextNode = current->next;
+                    free(current);
+                    current = nextNode;
+                }
+                free(list);
+            }
+            
+            int main() {
+                struct DoublyLinkedList* list = createList();
+                int choice, value, pos;
+            
+                while (1) {
+                    printf("\n1. Insert at Beginning\n2. Insert at Position\n3. Insert at End\n4. Delete at Beginning\n5. Delete at End\n6. Delete at Position\n7. Display\n8. Search\n9. Exit\n");
+                    printf("Enter your choice: ");
+                    scanf("%d", &choice);
+            
+                    switch (choice) {
+                        case 1:
+                            printf("Enter value: ");
+                            scanf("%d", &value);
+                            insertAtBeginning(list, value);
+                            break;
+                        case 2:
+                            printf("Enter value and position: ");
+                            scanf("%d %d", &value, &pos);
+                            insertAtPosition(list, value, pos);
+                            break;
+                        case 3:
+                            printf("Enter value: ");
+                            scanf("%d", &value);
+                            insertAtEnd(list, value);
+                            break;
+                        case 4:
+                            deleteAtBeginning(list);
+                            break;
+                        case 5:
+                            deleteAtEnd(list);
+                            break;
+                        case 6:
+                            printf("Enter position: ");
+                            scanf("%d", &pos);
+                            deleteAtPosition(list, pos);
+                            break;
+                        case 7:
+                            display(list);
+                            break;
+                        case 8:
+                            printf("Enter value to search: ");
+                            scanf("%d", &value);
+                            if (search(list, value))
+                                printf("Value found!\n");
+                            else
+                                printf("Value not found!\n");
+                            break;
+                        case 9:
+                            if (isEmpty(list))
+                                printf("List is empty.\n");
+                            else
+                                printf("List is not empty.\n");
+                            break;
+                        case 10:
+                            freeList(list); 
+                            exit(0);
+                        default:
+                            printf("Invalid choice. Please try again.\n");
+                    }
+                }
+            
+                return 0;
+            }
+            
+            
+            
+            
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+      
+        
+        1. Insert at Beginning
+        2. Insert at Position
+        3. Insert at End
+        4. Delete at Beginning
+        5. Delete at End
+        6. Delete at Position
+        7. Display
+        8. Search
+        9. Check if Empty
+        10. Exit
+        Enter your choice: 2
+        Enter value and position: 45
+        2
+        Position out of bounds. Inserting at the end instead.
+        
+        1. Insert at Beginning
+        2. Insert at Position
+        3. Insert at End
+        4. Delete at Beginning
+        5. Delete at End
+        6. Delete at Position
+        7. Display
+        8. Search
+        9. Check if Empty
+        10. Exit
+        Enter your choice: 3
+        Enter value: 67
+        
+        1. Insert at Beginning
+        2. Insert at Position
+        3. Insert at End
+        4. Delete at Beginning
+        5. Delete at End
+        6. Delete at Position
+        7. Display
+        8. Search
+        9. Check if Empty
+        10. Exit
+        Enter your choice: 7
+        45 <-> 67 <-> NULL
+        
+        1. Insert at Beginning
+        2. Insert at Position
+        3. Insert at End
+        4. Delete at Beginning
+        5. Delete at End
+        6. Delete at Position
+        7. Display
+        8. Search
+        9. Check if Empty
+        10. Exit
+        Enter your choice: 10
+        
+        === Code Execution Successful ===
+        
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 19</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>19. Find the local maxima in the array?</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+
+
+            int main() {
+                int arr[100];
+                int n;
+            
+                printf("Enter the number of elements in the array: ");
+                scanf("%d", &n);
+                
+                printf("Enter %d elements:\n", n);
+                for (int i = 0; i < n; i++) {
+                    scanf("%d", &arr[i]);
+                }
+                printf("Local maxima in the array are:\n");
+                for (int i = 0; i < n; i++) {
+                  
+                    if ((i == 0 && n > 1 && arr[i] > arr[i + 1]) || 
+                        (i == n - 1 && n > 1 && arr[i] > arr[i - 1]) || 
+                        (i > 0 && i < n - 1 && arr[i] > arr[i - 1] && arr[i] > arr[i + 1])) { 
+                        printf("%d ", arr[i]);
+                    }
+                }
+            
+                printf("\n");
+                return 0; 
+            }
+            
+
+            
+      
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        Enter the number of elements in the array: 5
+        Enter 5 elements:
+        6
+        9
+        12
+        15
+        3
+        Local maxima in the array are:
+        15 
+        
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

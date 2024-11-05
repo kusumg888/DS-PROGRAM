@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 5</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>5. Traverse the adjacent matrix with breadth first search.</h1>
+    <h3>Code:</h3>
+    <pre>
+        
+        #include <stdio.h>
+            #define MAX 5  
+                                
+            int queue[MAX];
+            int front = -1, rear = -1;
+                                
+            void enqueue(int value) {
+                if (rear == MAX - 1) return;  
+                if (front == -1) front = 0;
+                queue[++rear] = value;
+            }
+                                
+            int dequeue() {
+                if (front == -1) return -1;  
+                int value = queue[front];
+                if (front == rear) front = rear = -1;  
+                else front++;
+                return value;
+            }
+            
+            int isQueueEmpty() {
+                return front == -1;
+            }
+                                
+            void bfs(int matrix[MAX][MAX], int start) {
+                int visited[MAX] = {0};  
+                printf("%d ", start);
+                visited[start] = 1;
+                enqueue(start);
+                                
+                while (!isQueueEmpty()) {
+                    int current = dequeue();
+                    for (int adj = 0; adj < MAX; adj++) {
+                        if (matrix[current][adj] == 1 && !visited[adj]) {  
+                            printf("%d ", adj);
+                            visited[adj] = 1;
+                            enqueue(adj);
+                        }
+                    }
+                }
+            }
+                                
+            int main() {
+                int adj_matrix[MAX][MAX] = {
+                {0, 1, 0, 0, 1},  
+                {1, 0, 1, 1, 1},  
+                {0, 1, 0, 1, 0}, 
+                {0, 1, 1, 0, 1},  
+                {1, 1, 0, 1, 0}   
+                };
+                                
+                printf("BFS Traversal starting from vertex 0:\n");
+                bfs(adj_matrix, 0);
+                                
+                return 0;
+            }
+                                
+                            
+        
+        
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        BFS Traversal starting from vertex 0:
+        0 1 4 2 3 
+
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

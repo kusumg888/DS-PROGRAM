@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 4</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>4. Implement the operations of queue dynamically of strings (insert, delete, peek, isEmpty, isFull).</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+            #include <stdlib.h>
+            #include <string.h>
+            
+            struct Node {
+                char* data;
+                struct Node* next;
+            };
+            
+            struct Queue {
+                struct Node* front;
+                struct Node* rear;
+            };
+            
+            struct Queue* createQueue() {
+                struct Queue* q = (struct Queue*)malloc(sizeof(struct Queue));
+                q->front = NULL;
+                q->rear = NULL;
+                return q;
+            }
+            
+            int isEmpty(struct Queue* q) {
+                return q->front == NULL;
+            }
+            void enqueue(struct Queue* q, const char* value) {
+                struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                newNode->data = (char*)malloc(strlen(value) + 1);
+                strcpy(newNode->data, value);
+                newNode->next = NULL;
+            
+                if (isEmpty(q)) {
+                    q->front = newNode;
+                    q->rear = newNode;
+                } else {
+                    q->rear->next = newNode;
+                    q->rear = newNode;
+                }
+                printf("Inserted '%s'\n", value);
+            }
+            
+            char* dequeue(struct Queue* q) {
+                if (isEmpty(q)) {
+                    printf("Queue is empty. Cannot dequeue.\n");
+                    return NULL; 
+                }
+            
+                struct Node* temp = q->front;
+                char* item = temp->data;
+                q->front = q->front->next;
+            
+                if (q->front == NULL) {
+                    q->rear = NULL; 
+                }
+            
+                free(temp);
+                return item;
+            }
+            
+            char* peek(struct Queue* q) {
+                if (isEmpty(q)) {
+                    printf("Queue is empty. Cannot peek.\n");
+                    return NULL; 
+                }
+                return q->front->data;
+            }
+            
+            void freeQueue(struct Queue* q) {
+                while (!isEmpty(q)) {
+                    char* data = dequeue(q);
+                    free(data); 
+                }
+                free(q);
+            }
+            
+            int main() {
+                struct Queue* q = createQueue();
+                int choice;
+                char value[100];
+            
+                while (1) {
+                    printf("\n1. Enqueue\n2. Dequeue\n3. Peek\n4. Check if Empty\n5. Exit\n");
+                    printf("Enter your choice: ");
+                    scanf("%d", &choice);
+                    getchar();
+                    switch (choice) {
+                        case 1:
+                            printf("Enter string to insert: ");
+                        gets(value);
+                            value[strcspn(value, "\n")] = 0; 
+                            enqueue(q, value);
+                            break;
+                        case 2:
+                            {
+                                char* dequeuedValue = dequeue(q);
+                                if (dequeuedValue) {
+                                    printf("Dequeued: '%s'\n", dequeuedValue);
+                                    free(dequeuedValue); 
+                                }
+                            }
+                            break;
+                        case 3:
+                            {
+                                char* peekedValue = peek(q);
+                                if (peekedValue) {
+                                    printf("Front element: '%s'\n", peekedValue);
+                                }
+                            }
+                            break;
+                        case 4:
+                            if (isEmpty(q)) {
+                                printf("Queue is empty.\n");
+                            } else {
+                                printf("Queue is not empty.\n");
+                            }
+                            break;
+                        case 5:
+                            freeQueue(q);
+                            exit(0);
+                        default:
+                            printf("Invalid choice. Please try again.\n");
+                    }
+                }
+            
+                return 0;
+            }
+            
+            
+            
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        1. Enqueue
+        2. Dequeue
+        3. Peek2
+        4. Check if Empty
+        5. Exit
+        Enter your choice: 1
+        Enter string to insert: 6
+        Inserted '6'
+        
+        1. Enqueue
+        2. Dequeue
+        3. Peek
+        4. Check if Empty
+        5. Exit
+        Enter your choice: 5
+        
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

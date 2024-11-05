@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 8</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>8. Find the arithmetic mean of an integer array using recursion.</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h >
+
+        int sumOfArray(int arr[], int n) {
+            if (n == 1) 
+                return arr[0];
+            else
+                return arr[n - 1] + sumOfArray(arr, n - 1); 
+            }
+                            
+            float arithmeticMean(int arr[], int n) {
+                int sum = sumOfArray(arr, n); 
+                return (float)sum / n;        
+            }
+                            
+        int main() {
+            int arr[] = {3, 5, 7, 2, 8, 6};
+            int n = sizeof(arr) / sizeof(arr[0]);
+                            
+            float mean = arithmeticMean(arr, n);
+            printf("The arithmetic mean of the array is: %.2f\n", mean);
+                            
+            return 0;
+        }
+          
+   
+    
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        The arithmetic mean of the array is:5.17
+
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

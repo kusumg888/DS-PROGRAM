@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 17</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>17. Queue based approach for first non-repeating character in a stream.
+        Explanation :
+        Given a stream of characters and we have to find first non repeating character each time a character is inserted to the stream. Examples: Input : a a b c Output : a -1 b b Input : a a c Output : a -1 c
+    </h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+            #include <stdlib.h>
+            #include <string.h>
+            
+            #define MAX 256 
+            
+            struct Node {
+                char data;
+                struct Node* next;
+            };
+            
+            struct Queue {
+                struct Node* front;
+                struct Node* rear;
+            };
+            
+            struct Queue* createQueue() {
+                struct Queue* q = (struct Queue*)malloc(sizeof(struct Queue));
+                q->front = NULL;
+                q->rear = NULL;
+                return q;
+            }
+            
+            void enqueue(struct Queue* q, char value) {
+                struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                newNode->data = value;
+                newNode->next = NULL;
+                if (q->rear == NULL) {
+                    q->front = newNode;
+                    q->rear = newNode;
+                } else {
+                    q->rear->next = newNode;
+                    q->rear = newNode;
+                }
+            }
+            
+            char dequeue(struct Queue* q) {
+                if (q->front == NULL) {
+                    return '\0'; 
+                }
+                struct Node* temp = q->front;
+                char value = temp->data;
+                q->front = q->front->next;
+                if (q->front == NULL) {
+                    q->rear = NULL;
+                }
+                free(temp);
+                return value;
+            }
+            
+            int isEmpty(struct Queue* q) {
+                return q->front == NULL;
+            }
+            
+            void firstNonRepeatingCharacter(char* stream) {
+                int count[MAX] = {0}; 
+                struct Queue* q = createQueue();
+            
+                for (int i = 0; stream[i] != '\0'; i++) {
+                    char current = stream[i];
+                    count[current]++;
+                    enqueue(q, current);
+                    
+                    while (!isEmpty(q)) {
+                        if (count[q->front->data] == 1) {
+                            printf("%c ", q->front->data);
+                            break;
+                        } else {
+                            dequeue(q); 
+                        }
+                    }
+                    if (isEmpty(q)) {
+                        printf("-1 ");
+                    }
+                }
+                printf("\n");
+                free(q);
+            }
+            
+            int main() {
+                char stream[100];
+                
+                printf("Enter a stream of characters: ");
+                fgets(stream, sizeof(stream), stdin);
+                
+                stream[strcspn(stream, "\n")] = 0;
+                
+                printf("Output: ");
+                firstNonRepeatingCharacter(stream);
+            
+                return 0;
+            }
+            
+            
+            
+            
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        Enter a stream of characters: aabc
+        Output: a -1 b b 
+
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

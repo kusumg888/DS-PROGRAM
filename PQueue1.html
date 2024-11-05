@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 1</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>1. Implement the operations of simple queue in an integer array (insert, delete, peek, isEmpty, isFull).</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+            #include <stdlib.h>
+            
+            struct Queue {
+                int items[5];
+                int front;
+                int rear;
+            };
+            
+            struct Queue* createQueue() {
+                struct Queue* q = (struct Queue*)malloc(sizeof(struct Queue));
+                q->front = -1;
+                q->rear = -1;
+                return q;
+            }
+            
+            int isEmpty(struct Queue* q) {
+                return q->front == -1;
+            }
+            
+            int isFull(struct Queue* q) {
+                return q->rear == 4;
+            }
+            
+            void enqueue(struct Queue* q, int value) {
+                if (isFull(q)) {
+                    printf("Queue is full. Cannot insert %d.\n", value);
+                    return;
+                }
+                if (isEmpty(q)) {
+                    q->front = 0; 
+                }
+                q->rear++;
+                q->items[q->rear] = value;
+                printf("Inserted %d\n", value);
+            }
+            
+            int dequeue(struct Queue* q) {
+                if (isEmpty(q)) {
+                    printf("Queue is empty. Cannot dequeue.\n");
+                    return -1; 
+                }
+                int item = q->items[q->front];
+                if (q->front >= q->rear) { 
+                    q->front = -1;
+                    q->rear = -1;
+                } else {
+                    q->front++;
+                }
+                return item;
+            }
+            
+            int peek(struct Queue* q) {
+                if (isEmpty(q)) {
+                    printf("Queue is empty. Cannot peek.\n");
+                    return -1;
+                }
+                return q->items[q->front];
+            }
+            
+            int main() {
+                struct Queue* q = createQueue();
+                int choice, value;
+            
+                while (1) {
+                    printf("\n1. Enqueue\n2. Dequeue\n3. Peek\n4. Exit\n");
+                    printf("Enter your choice: ");
+                    scanf("%d", &choice);
+            
+                    switch (choice) {
+                        case 1:
+                            printf("Enter value to insert: ");
+                            scanf("%d", &value);
+                            enqueue(q, value);
+                            break;
+                        case 2:
+                            value = dequeue(q);
+                            if (value != -1) {
+                                printf("Dequeued: %d\n", value);
+                            }
+                            break;
+                        case 3:
+                            value = peek(q);
+                            if (value != -1) {
+                                printf("Front element: %d\n", value);
+                            }
+                            break;
+                        case 4:
+                            free(q);
+                            exit(0);
+                        default:
+                            printf("Invalid choice. Please try again.\n");
+                    }
+                }
+            
+                return 0;
+            }
+            
+            
+            
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        1. Enqueue
+        2. Dequeue
+        3. Peek
+        4. Exit
+        Enter your choice: 1
+        Enter value to insert: 58
+        Inserted 58
+        
+        1. Enqueue
+        2. Dequeue
+        3. Peek
+        4. Exit
+        Enter your choice: 2
+        Dequeued: 58
+        
+        1. Enqueue
+        2. Dequeue
+        3. Peek
+        4. Exit
+        Enter your choice: 2
+        Queue is empty. Cannot dequeue.
+        
+        1. Enqueue
+        2. Dequeue
+        3. Peek
+        4. Exit
+        Enter your choice: 4
+        
+        
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

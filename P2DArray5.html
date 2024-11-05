@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 5</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>5. Enter a matrix from user, copy it in another matrix of same size.</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include < stdio.h >
+
+        int main() {
+            int rows, cols;
+                        
+            printf("Enter the number of rows: ");
+            scanf("%d", &rows);
+            printf("Enter the number of columns: ");
+            scanf("%d", &cols);
+                        
+            int matrix[rows][cols], copy[rows][cols];
+                        
+            printf("Enter elements of the matrix:\n");
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    printf("Enter element at position [%d][%d]: ", i, j);
+                    scanf("%d", &matrix[i][j]);
+                }
+            }
+                        
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    copy[i][j] = matrix[i][j];
+                }
+            }
+                        
+            printf("Copied matrix:\n");
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    printf("%d ", copy[i][j]);
+                }
+                printf("\n");
+            }
+                        
+            return 0;
+        }
+                        
+      
+        
+    </pre>
+    <h3>Output:</h3>
+    <pre> 
+        Enter the number of rows: 2
+        Enter the number of columns: 2
+        Enter elements of the matrix:
+        Enter element at position [0][0]: 12
+        Enter element at position [0][1]: 6
+        Enter element at position [1][0]: 87
+        Enter element at position [1][1]: 6
+        Copied matrix:
+        
+        12 6 
+        87 6 
+ 
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

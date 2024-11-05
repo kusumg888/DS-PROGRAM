@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 6</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>6. Implement the operations of circular queue in a string array (insert, delete, peek, isEmpty, isFull).</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+            #include <stdlib.h>
+            #include <string.h>
+            
+            #define MAX 5
+            #define STRING_LENGTH 100
+            
+            struct CircularQueue {
+                char items[MAX][100];
+                int front;
+                int rear;
+            };
+            
+            struct CircularQueue* createQueue() {
+                struct CircularQueue* q = (struct CircularQueue*)malloc(sizeof(struct CircularQueue));
+                q->front = -1;
+                q->rear = -1;
+                return q;
+            }
+            
+            int isEmpty(struct CircularQueue* q) {
+                return q->front == -1;
+            }
+            
+            int isFull(struct CircularQueue* q) {
+                return (q->rear + 1) % MAX == q->front;
+            }
+            
+            void enqueue(struct CircularQueue* q, const char* value) {
+                if (isFull(q)) {
+                    printf("Queue is full. Cannot insert '%s'.\n", value);
+                    return;
+                }
+                if (isEmpty(q)) {
+                    q->front = 0; 
+                }
+                q->rear = (q->rear + 1) % MAX;
+                strcpy(q->items[q->rear], value);
+                printf("Inserted '%s'\n", value);
+            }
+            char* dequeue(struct CircularQueue* q) {
+                if (isEmpty(q)) {
+                    printf("Queue is empty. Cannot dequeue.\n");
+                    return NULL; 
+                }
+                char* item = q->items[q->front];
+                if (q->front == q->rear) { 
+                    q->front = -1;
+                    q->rear = -1;
+                } else {
+                    q->front = (q->front + 1) % MAX; 
+                }
+                return item;
+            }
+            
+            char* peek(struct CircularQueue* q) {
+                if (isEmpty(q)) {
+                    printf("Queue is empty. Cannot peek.\n");
+                    return NULL;
+                }
+                return q->items[q->front];
+            }
+            
+            void freeQueue(struct CircularQueue* q) {
+                free(q);
+            }
+            
+            int main() {
+                struct CircularQueue* q = createQueue();
+                int choice;
+                char value[100];
+            
+                while (1) {
+                    printf("\n1. Enqueue\n2. Dequeue\n3. Peek\n4. Check if Empty\n5. Check if Full\n6. Exit\n");
+                    printf("Enter your choice: ");
+                    scanf("%d", &choice);
+                    getchar(); 
+                    switch (choice) {
+                        case 1:
+                            printf("Enter string to insert: ");
+                            gets(value);
+                            value[strcspn(value, "\n")] = 0; 
+                            enqueue(q, value);
+                            break;
+                        case 2:
+                            char* dequeuedValue = dequeue(q);
+                            if (dequeuedValue) {
+                                printf("Dequeued: '%s'\n", dequeuedValue);
+                            }
+                            break;
+                        case 3:
+                            char* peekedValue = peek(q);
+                            if (peekedValue) {
+                                printf("Front element: '%s'\n", peekedValue);
+                            }
+                            break;
+                        case 4:
+                            if (isEmpty(q))
+                                printf("Queue is empty.\n");
+                            else
+                                printf("Queue is not empty.\n");
+                            break;
+                        case 5:
+                            if (isFull(q))
+                                printf("Queue is full.\n");
+                            else
+                                printf("Queue is not full.\n");
+                            break;
+                        case 6:
+                            freeQueue(q);
+                            exit(0);
+                        default:
+                            printf("Invalid choice. Please try again.\n");
+                    }
+                }
+            
+                return 0;
+            }
+            
+            
+            
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        1. Enqueue
+        2. Dequeue
+        3. Peek
+        4. Check if Empty
+        5. Check if Full
+        6. Exit
+        Enter your choice: 1
+        Enter string to insert: Hello
+        Inserted 'Hello'
+        
+        1. Enqueue
+        2. Dequeue
+        3. Peek
+        4. Check if Empty
+        5. Check if Full
+        6. Exit
+        Enter your choice: 1
+        Enter string to insert: World
+        Inserted 'World'
+        
+        1. Enqueue
+        2. Dequeue
+        3. Peek
+        4. Check if Empty
+        5. Check if Full
+        6. Exit
+        Enter your choice: 2
+        Dequeued: 'Hello'
+        
+        1. Enqueue
+        2. Dequeue
+        3. Peek
+        4. Check if Empty
+        5. Check if Full
+        6. Exit
+        Enter your choice: 3
+        Front element: 'World'
+        
+        1. Enqueue
+        2. Dequeue
+        3. Peek
+        4. Check if Empty
+        5. Check if Full
+        6. Exit
+        Enter your choice: 6
+        
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

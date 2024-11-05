@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 3</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>3. Enter an array from user and copy the array into second array?</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+
+            int main() {
+                int arr1[50]; 
+                int arr2[50]; 
+                int n, i;
+                printf("Enter the number of elements in the array: ");
+                scanf("%d", &n);
+                printf("Enter %d elements:\n", n);
+                for (i = 0; i < n; i++) {
+                    scanf("%d", &arr1[i]);
+                }
+                for (i = 0; i < n; i++) {
+                    arr2[i] = arr1[i];
+                }
+            
+                printf("The elements of the second array are:\n");
+                for (i = 0; i < n; i++) {
+                    printf("%d ", arr2[i]);
+                }
+                printf("\n"); 
+                return 0; 
+            }
+            
+        
+      
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        Enter the number of elements in the array: 4
+        Enter 4 elements:
+        45
+        67
+        67
+        35
+        The elements of the second array are:
+        45 67 67 35 
+        
+
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

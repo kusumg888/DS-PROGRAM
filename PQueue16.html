@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 16</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>16. Find next smaller element.
+        Explanation :
+        Given an array, print the Next Smaller Element (NSE) for every element. The NSE for an element x is the first smaller element on the right side of x in the array. Elements for which no smaller element exist (on the right side), consider NSE as -1. Examples: Input: [4, 8, 5, 2, 25] Output: [2, 5, 2, -1, -1] Explanation: The first element smaller than 4 having index > 0 is 2. The first element smaller than 8 having index > 1 is 5. The first element smaller than 5 having index > 2 is 2. There are no elements smaller than 4 having index > 3. There are no elements smaller than 4 having index > 4. Input: [13, 7, 6, 12] Output: [7, 6, -1, -1] Explanation: The first element smaller than 13 having index > 0 is 7. The first element smaller than 7 having index > 1 is 6. There are no elements smaller than 6 having index > 2. There are no elements smaller than 12 having index > 3.
+    </h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+            #include <stdlib.h>
+            
+            void nextSmallerElement(int arr[], int n) {
+                int *result = (int *)malloc(n * sizeof(int)); 
+                int *stack = (int *)malloc(n * sizeof(int)); 
+                int top = -1; 
+                for (int i = 0; i < n; i++) {
+                    result[i] = -1;
+                }
+            
+                for (int i = 0; i < n; i++) {
+                    while (top != -1 && arr[stack[top]] > arr[i]) {
+                        result[stack[top]] = arr[i]; 
+                        top--; 
+                    }
+                    stack[++top] = i;
+                }
+            
+                for (int i = 0; i < n; i++) {
+                    printf("%d ", result[i]);
+                }
+                printf("\n");
+            
+                free(result);
+                free(stack);
+            }
+            
+            int main() {
+                int arr1[] = {4, 5, 2, 10, 8};
+                int n1 = sizeof(arr1) / sizeof(arr1[0]);
+                printf("Input: N = %d, arr[] = [", n1);
+                for (int i = 0; i < n1; i++) {
+                    printf("%d", arr1[i]);
+                    if (i < n1 - 1) printf(", ");
+                }
+                printf("]\nOutput: ");
+                nextSmallerElement(arr1, n1); 
+            
+                int arr2[] = {6, 2, 5, 4, 5, 1, 6};
+                int n2 = sizeof(arr2) / sizeof(arr2[0]);
+                printf("Input: N = %d, arr[] = [", n2);
+                for (int i = 0; i < n2; i++) {
+                    printf("%d", arr2[i]);
+                    if (i < n2 - 1) printf(", ");
+                }
+                printf("]\nOutput: ");
+                nextSmallerElement(arr2, n2); 
+            
+                return 0;
+            }
+            
+            
+            
+            
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        Input: N = 5, arr[] = [4, 5, 2, 10, 8]
+        Output: 2 2 -1 8 -1 
+        Input: N = 7, arr[] = [6, 2, 5, 4, 5, 1, 6]
+        Output: 2 1 4 1 1 -1 -1 
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

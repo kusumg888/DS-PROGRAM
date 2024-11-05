@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 11</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>11. Enter the 2 polynomial equations dynamically, multiply them and display the answer.</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+            #include <stdlib.h>
+            
+            struct Term {
+                int coeff;
+                int exp;
+                struct Term* next;
+            };
+            
+            struct Polynomial {
+                struct Term* head;
+            };
+            
+            struct Term* createTerm(int coeff, int exp) {
+                struct Term* newTerm = (struct Term*)malloc(sizeof(struct Term));
+                newTerm->coeff = coeff;
+                newTerm->exp = exp;
+                newTerm->next = NULL;
+                return newTerm;
+            }
+            void addTerm(struct Polynomial* poly, int coeff, int exp) {
+                struct Term* newTerm = createTerm(coeff, exp);
+                newTerm->next = poly->head;
+                poly->head = newTerm;
+            }
+            struct Polynomial multiplyPolynomials(struct Polynomial* poly1, struct Polynomial* poly2) {
+                struct Polynomial result;
+                result.head = NULL;
+            
+                for (struct Term* t1 = poly1->head; t1 != NULL; t1 = t1->next) {
+                    for (struct Term* t2 = poly2->head; t2 != NULL; t2 = t2->next) {
+                        int coeff = t1->coeff * t2->coeff;
+                        int exp = t1->exp + t2->exp;
+                        addTerm(&result, coeff, exp);
+                    }
+                }
+                return result;
+            }
+            
+            void displayPolynomial(struct Polynomial* poly) {
+                struct Term* current = poly->head;
+                while (current != NULL) {
+                    printf("%dx^%d ", current->coeff, current->exp);
+                    if (current->next != NULL) printf("+ ");
+                    current = current->next;
+                }
+                printf("\n");
+            }
+            
+            int main() {
+                struct Polynomial poly1, poly2;
+                poly1.head = NULL;
+                poly2.head = NULL;
+            
+                int n, coeff, exp;
+                printf("Enter number of terms in first polynomial: ");
+                scanf("%d", &n);
+                for (int i = 0; i < n; i++) {
+                    printf("Enter coefficient and exponent: ");
+                    scanf("%d %d", &coeff, &exp);
+                    addTerm(&poly1, coeff, exp);
+                }
+            
+                printf("Enter number of terms in second polynomial: ");
+                scanf("%d", &n);
+                for (int i = 0; i < n; i++) {
+                    printf("Enter coefficient and exponent: ");
+                    scanf("%d %d", &coeff, &exp);
+                    addTerm(&poly2, coeff, exp);
+                }
+            
+                struct Polynomial result = multiplyPolynomials(&poly1, &poly2);
+            
+                printf("Resultant Polynomial (Multiplication): ");
+                displayPolynomial(&result);
+            
+                return 0;
+            }
+            
+            
+            
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        Enter number of terms in first polynomial: 3
+        Enter coefficient and exponent: 4 8
+        Enter coefficient and exponent: 5 2
+        Enter coefficient and exponent:  1 31 3
+        Enter number of terms in second polynomial: 2
+        Enter coefficient and exponent: 1 6
+        Enter coefficient and exponent: 7 8
+        Resultant Polynomial (Multiplication): 4x^14 + 28x^16 + 5x^8 + 35x^10 + 1x^9 + 7x^11 
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

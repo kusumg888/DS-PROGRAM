@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 13</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>13. Find the first circular tour that visits all petrol pumps.
+        Explanation :
+        Given information about N petrol pumps (say arr[]) that are present in a circular path. The information consists of the distance of the next petrol pump from the current one (in arr[i][1]) and the amount of petrol stored in that petrol pump (in arr[i][0]). Consider a truck with infinite capacity that consumes 1 unit of petrol to travel 1 unit distance. The task is to find the index of the first starting point such that the truck can visit all the petrol pumps and come back to that starting point. Note: Return -1 if no such tour exists. Examples: Input: arr[] = {{4, 6}, {6, 5}, {7, 3}, {4, 5}}. Output: 1 Explanation: If started from 1st index then a circular tour can be covered. Input: arr[] {{6, 4}, {3, 6}, {7, 3}} Output: 2
+    </h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+
+            int findCircularTour(int petrol[], int distance[], int n) {
+                int start = 0, curr_petrol = 0, total_petrol = 0, total_distance = 0;
+            
+                for (int i = 0; i < n; i++) {
+                    total_petrol += petrol[i];
+                    total_distance += distance[i];
+                    curr_petrol += petrol[i] - distance[i];
+            
+                    if (curr_petrol < 0) {
+                        start = i + 1; 
+                        curr_petrol = 0; 
+                    }
+                }
+            
+                return (total_petrol < total_distance) ? -1 : start;
+            }
+            
+            int main() {
+                int petrol[] = {4, 6, 7, 4};
+                int distance[] = {6, 5, 3, 5};
+                int n = sizeof(petrol) / sizeof(petrol[0]);
+            
+                int startingPump = findCircularTour(petrol, distance, n);
+                if (startingPump == -1) {
+                    printf("No circular tour is possible.\n");
+                } else {
+                    printf("The first circular tour starts at pump: %d\n", startingPump);
+                }
+            
+                return 0;
+            }
+            
+            
+            
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        The first circular tour starts at pump: 1
+
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

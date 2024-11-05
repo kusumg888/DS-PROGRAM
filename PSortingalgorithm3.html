@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 3</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>3. Enter a integer array from the user and perform bubble sort algorithm through iteration. Also calculate the worst and best complexity with exact time.</h1>
+    <h3>Code:</h3>
+    <pre>
+      
+        #include <stdio.h>
+            #include <time.h>
+            
+            void bubbleSort(int arr[], int n) {
+                int i, j, temp;
+                for (i = 0; i < n - 1; i++) {
+                    for (j = 0; j < n - i - 1; j++) {
+                        if (arr[j] > arr[j + 1]) {
+                            temp = arr[j];
+                            arr[j] = arr[j + 1];
+                            arr[j + 1] = temp;
+                        }
+                    }
+                }
+            }
+            
+            
+            int main() {
+                int n;
+            
+                printf("Enter the number of elements: ");
+                scanf("%d", &n);
+                
+                int arr[n];
+            
+                printf("Enter %d integers:\n", n);
+                for (int i = 0; i < n; i++) {
+                    scanf("%d", &arr[i]);
+                }
+            
+                // Measure time for bubble sort (worst case)
+                clock_t start = clock();
+                bubbleSort(arr, n);
+                clock_t end = clock();
+            
+                double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
+            
+                printf("Sorted array:\n");
+               for (int i = 0; i < n; i++) {
+                    printf("%d ", arr[i]);
+                }
+                printf("\n");
+                printf("Time taken for bubble sort (worst case): %f seconds\n", time_taken);
+            
+                // Reset the array for best-case scenario
+                printf("Enter %d integers for best case (sorted input):\n", n);
+                for (int i = 0; i < n; i++) {
+                    arr[i] = i; 
+                }
+            
+                start = clock();
+                bubbleSort(arr, n);
+                end = clock();
+            
+                time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
+            
+                printf("Sorted array (best case):\n");
+                for (int i = 0; i < n; i++) {
+                    printf("%d ", arr[i]);
+                }
+                printf("\n");
+                printf("Time taken for bubble sort (best case): %f seconds\n", time_taken);
+            
+                return 0;
+            }
+            
+
+      
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        Enter the number of elements: 6
+        Enter 6 integers:
+        78
+        9
+        23
+        4
+        68
+        45
+        Sorted array:
+        4 9 23 45 68 78 
+        Time taken for bubble sort (worst case): 0.000002 seconds
+        Enter 6 integers for best case (sorted input):
+        Sorted array (best case):
+        0 1 2 3 4 5 
+        Time taken for bubble sort (best case): 0.000002 seconds
+
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

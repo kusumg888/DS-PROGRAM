@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 9</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>9. Calculate the best and worst complexity of the linear searching algorithm with exact time taken by the algorithm on integer array.</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+            #include <time.h>
+            
+            
+            int linearSearch(int arr[], int size, int target) {
+                for (int i = 0; i < size; i++) {
+                    if (arr[i] == target) {
+                        return i; 
+                    }
+                }
+                return -1; 
+            }
+            
+            int main() {
+                int size, target;
+            
+                printf("Enter the size of the array: ");
+                scanf("%d", &size);
+            
+                int arr[size];
+            
+                printf("Enter %d elements:\n", size);
+                for (int i = 0; i < size; i++) {
+                    scanf("%d", &arr[i]);
+                }
+            
+                printf("Enter the integer value to search for: ");
+                scanf("%d", &target);
+            
+                clock_t start = clock(); 
+                int result = linearSearch(arr, size, target);
+                clock_t end = clock(); 
+                double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
+            
+                if (result != -1) {
+                    printf("Element %d found at index %d.\n", target, result);
+                } else {
+                    printf("Element %d not found in the array.\n", target);
+                }
+            
+                printf("Time taken for linear search: %f seconds\n", time_taken);
+                
+                return 0; 
+            }
+            
+
+      
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        Enter the size of the array: 4
+        Enter 4 elements:
+        90
+        68
+        35
+        55
+        Enter the integer value to search for: 55
+        Element 55 found at index 3.
+        Time taken for linear search: 0.000001 seconds
+        
+        
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

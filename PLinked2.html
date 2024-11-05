@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 2</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>2. Implement the operations of single circular linked list storing integer values (insert at begin, insert at pos, insert at end, delete at begin, delete at end, delete at pos, isEmpty, isFull, display, search).</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+            #include <stdlib.h>
+            
+            struct Node {
+                int data;
+                struct Node* next;
+            };
+            
+            struct CircularLinkedList {
+                struct Node* tail; 
+            };
+            
+            struct CircularLinkedList* createList() {
+                struct CircularLinkedList* list = (struct CircularLinkedList*)malloc(sizeof(struct CircularLinkedList));
+                if (list == NULL) {
+                    printf("Memory allocation failed.\n");
+                    exit(1); 
+                }
+                list->tail = NULL; 
+                return list;
+            }
+            
+            int isEmpty(struct CircularLinkedList* list) {
+                return list->tail == NULL;
+            }
+            
+            void insertAtBeginning(struct CircularLinkedList* list, int value) {
+                struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                if (newNode == NULL) {
+                    printf("Memory allocation failed.\n");
+                    return;
+                }
+                newNode->data = value;
+            
+                if (isEmpty(list)) {
+                    newNode->next = newNode; 
+                    list->tail = newNode;
+                } else {
+                    newNode->next = list->tail->next; 
+                    list->tail->next = newNode; 
+                }
+            }
+            
+            void insertAtPosition(struct CircularLinkedList* list, int value, int pos) {
+                if (pos < 0) {
+                    printf("Invalid position. Must be non-negative.\n");
+                    return;
+                }
+            
+                if (pos == 0) {
+                    insertAtBeginning(list, value);
+                    return;
+                }
+            
+                struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+                if (newNode == NULL) {
+                    printf("Memory allocation failed.\n");
+                    return;
+                }
+                newNode->data = value;
+            
+                if (isEmpty(list)) {
+                    newNode->next = newNode; 
+                    list->tail = newNode;
+                } else {
+                    struct Node* current = list->tail->next; 
+                    for (int i = 0; i < pos - 1 && current != list->tail; i++) {
+                        current = current->next;
+                    }
+            
+                    if (current == list->tail && pos > 1) {
+                        printf("Position out of bounds.\n");
+                        free(newNode);
+                        return;
+                    }
+            
+                    newNode->next = current->next;
+                    current->next = newNode;
+            
+                    if (current == list->tail) { 
+                        list->tail = newNode;
+                    }
+                }
+            }
+            
+            void insertAtEnd(struct CircularLinkedList* list, int value) {
+                insertAtPosition(list, value, isEmpty(list) ? 0 : 1); 
+            }
+            
+            void deleteAtBeginning(struct CircularLinkedList* list) {
+                if (isEmpty(list)) {
+                    printf("List is empty. Nothing to delete.\n");
+                    return;
+                }
+            
+                struct Node* temp = list->tail->next; 
+                if (list->tail == temp) { 
+                    free(temp);
+                    list->tail = NULL; 
+                } else {
+                    list->tail->next = temp->next; 
+                    free(temp);
+                }
+            }
+            
+            void deleteAtEnd(struct CircularLinkedList* list) {
+                if (isEmpty(list)) {
+                    printf("List is empty. Nothing to delete.\n");
+                    return;
+                }
+            
+                struct Node* current = list->tail->next; 
+                if (current == list->tail) { 
+                    free(current);
+                    list->tail = NULL; 
+                } else {
+                    while (current->next != list->tail) { 
+                        current = current->next;
+                    }
+                    free(list->tail);
+                    current->next = list->tail->next; 
+                    list->tail = current; 
+                }
+            }
+            
+            void deleteAtPosition(struct CircularLinkedList* list, int pos) {
+                if (isEmpty(list)) {
+                    printf("List is empty. Nothing to delete.\n");
+                    return;
+                }
+            
+                if (pos < 0) {
+                    printf("Invalid position. Must be non-negative.\n");
+                    return;
+                }
+            
+                if (pos == 0) {
+                    deleteAtBeginning(list);
+                    return;
+                }
+            
+                struct Node* current = list->tail->next; 
+                for (int i = 0; i < pos - 1 && current != list->tail; i++) {
+                    current = current->next;
+                }
+            
+                if (current->next == list->tail) { 
+                    deleteAtEnd(list);
+                } else if (current->next != NULL) {
+                    struct Node* temp = current->next;
+                    current->next = temp->next; 
+                    free(temp);
+                } else {
+                    printf("Position out of bounds.\n");
+                }
+            }
+            
+            void display(struct CircularLinkedList* list) {
+                if (isEmpty(list)) {
+                    printf("List is empty.\n");
+                    return;
+                }
+            
+                struct Node* current = list->tail->next; 
+                do {
+                    printf("%d -> ", current->data);
+                    current = current->next;
+                } while (current != list->tail->next); 
+                printf("(back to start)\n");
+            }
+            
+            int search(struct CircularLinkedList* list, int value) {
+                struct Node* current = list->tail->next; 
+                if (isEmpty(list)) return 0; 
+            
+                do {
+                    if (current->data == value) {
+                        return 1; 
+                    }
+                    current = current->next;
+                } while (current != list->tail->next);
+                return 0; 
+            }
+            void freeList(struct CircularLinkedList* list) {
+                if (isEmpty(list)) {
+                    free(list);
+                    return;
+                }
+            
+                struct Node* current = list->tail->next;
+                struct Node* nextNode;
+                do {
+                    nextNode = current->next;
+                    free(current);
+                    current = nextNode;
+                } while (current != list->tail->next);
+            
+                free(list);
+            }
+            
+            int main() {
+                struct CircularLinkedList* list = createList();
+                int choice, value, pos;
+            
+                while (1) {
+                    printf("\n1. Insert at Beginning\n2. Insert at Position\n3. Insert at End\n4. Delete at Beginning\n5. Delete at End\n6. Delete at Position\n7. Display\n8. Search\n9. Exit\n");
+                    printf("Enter your choice: ");
+                    scanf("%d", &choice);
+                    
+                    
+                    switch (choice) {
+                        case 1:
+                            printf("Enter value: ");
+                            scanf("%d", &value);
+                            insertAtBeginning(list, value);
+                            break;
+                        case 2:
+                            printf("Enter value and position: ");
+                            scanf("%d %d", &value, &pos);
+                            insertAtPosition(list, value, pos);
+                            break;
+                        case 3:
+                            printf("Enter value: ");
+                            scanf("%d", &value);
+                            insertAtEnd(list, value);
+                            break;
+                        case 4:
+                            deleteAtBeginning(list);
+                            break;
+                        case 5:
+                            deleteAtEnd(list);
+                            break;
+                        case 6:
+                            printf("Enter position: ");
+                            scanf("%d", &pos);
+                            deleteAtPosition(list, pos);
+                            break;
+                        case 7:
+                            display(list);
+                            break;
+                        case 8:
+                            printf("Enter value to search: ");
+                            scanf("%d", &value);
+                            if (search(list, value))
+                                printf("Value found!\n");
+                            else
+                                printf("Value not found!\n");
+                            break;
+                        case 9:
+                            if (isEmpty(list))
+                                printf("List is empty.\n");
+                            else
+                                printf("List is not empty.\n");
+                            break;
+                        case 10:
+                            freeList(list); 
+                            exit(0);
+                        default:
+                            printf("Invalid choice. Please try again.\n");
+                    }
+                }
+            
+                return 0;
+            }
+            
+            
+        
+            
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+       
+        1. Insert at Beginning
+        2. Insert at Position
+        3. Insert at End
+        4. Delete at Beginning
+        5. Delete at End
+        6. Delete at Position
+        7. Display
+        8. Search
+        9. Check if Empty
+        10. Exit
+        Enter your choice: 1
+        Enter value: 56
+        
+        1. Insert at Beginning
+        2. Insert at Position
+        3. Insert at End
+        4. Delete at Beginning
+        5. Delete at End
+        6. Delete at Position
+        7. Display
+        8. Search
+        9. Check if Empty
+        10. Exit
+        Enter your choice: 2
+        Enter value and position: 12
+        1
+        
+        1. Insert at Beginning
+        2. Insert at Position
+        3. Insert at End
+        4. Delete at Beginning
+        5. Delete at End
+        6. Delete at Position
+        7. Display
+        8. Search
+        9. Check if Empty
+        10. Exit
+        Enter your choice: 7
+        56 -> 12 -> (back to start)
+        
+        1. Insert at Beginning
+        2. Insert at Position
+        3. Insert at End
+        4. Delete at Beginning
+        5. Delete at End
+        6. Delete at Position
+        7. Display
+        8. Search
+        9. Check if Empty
+        10. Exit
+        Enter your choice: 10
+       
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

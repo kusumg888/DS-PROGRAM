@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 6</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>6. Enter a string from the user, enter a character and perform binary search algorithm through recursion.</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+            #include <string.h>
+            
+            void sortString(char str[]) {
+                int n = strlen(str);
+                
+                for (int i = 0; i < n - 1; i++) {
+                    for (int j = 0; j < n - i - 1; j++) {
+                        if (str[j] > str[j + 1]) {
+                           
+                            char temp = str[j];
+                            str[j] = str[j + 1];
+                            str[j + 1] = temp;
+                        }
+                    }
+                }
+            }
+            
+            int binarySearch(char str[], char target, int left, int right) {
+                
+                if (left > right) {
+                    return -1; 
+                }
+            
+                int mid = left + (right - left) / 2; 
+            
+                if (str[mid] == target) {
+                    return mid; 
+                }
+            
+                if (str[mid] > target) {
+                    return binarySearch(str, target, left, mid - 1);
+                }
+                
+                return binarySearch(str, target, mid + 1, right);
+            }
+            
+            int main() {
+                char str[100]; 
+                char target;
+            
+                printf("Enter a string: ");
+                fgets(str, sizeof(str), stdin); 
+                str[strcspn(str, "\n")] = 0;
+            
+                sortString(str);
+                printf("Sorted string: %s\n", str);
+                printf("Enter a character to search for: ");
+                scanf(" %c", &target); 
+                int result = binarySearch(str, target, 0, strlen(str) - 1);
+                if (result != -1) {
+                    printf("Character '%c' found at index %d.\n", target, result);
+                } else {
+                    printf("Character '%c' not found in the string.\n", target);
+                }
+                return 0; 
+            }
+            
+
+      
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        Enter a string: program
+        Sorted string: agmoprr
+        Enter a character to search for: g
+        Character 'g' found at index 1.
+        
+        
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+

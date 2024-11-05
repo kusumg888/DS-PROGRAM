@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program 10</title>
+    <link rel="stylesheet" type="text/css" href="styleDS.css">
+</head>
+<body>
+    <h1>10. Implement the operations of double ended queue in a string array (insert, delete, peek, isEmpty, isFull).</h1>
+    <h3>Code:</h3>
+    <pre>
+        #include <stdio.h>
+            #include <stdlib.h>
+            #include <string.h>
+            
+            #define MAX 5
+            
+            
+            struct Deque {
+                char items[MAX][100];
+                int front;
+                int rear;
+            };
+            
+            struct Deque* createDeque() {
+                struct Deque* dq = (struct Deque*)malloc(sizeof(struct Deque));
+                dq->front = -1;
+                dq->rear = -1;
+                return dq;
+            }
+            
+            int isEmpty(struct Deque* dq) {
+                return dq->front == -1;
+            }
+            
+            int isFull(struct Deque* dq) {
+                return (dq->rear + 1) % MAX == dq->front;
+            }
+            
+            void insertFront(struct Deque* dq, const char* value) {
+                if (isFull(dq)) {
+                    printf("Deque is full. Cannot insert '%s' at front.\n", value);
+                    return;
+                }
+                if (isEmpty(dq)) {
+                    dq->front = dq->rear = 0;
+                } else {
+                    dq->front = (dq->front - 1 + MAX) % MAX;
+                }
+                strcpy(dq->items[dq->front], value);
+                printf("Inserted '%s' at front.\n", value);
+            }
+            
+            void insertRear(struct Deque* dq, const char* value) {
+                if (isFull(dq)) {
+                    printf("Deque is full. Cannot insert '%s' at rear.\n", value);
+                    return;
+                }
+                if (isEmpty(dq)) {
+                    dq->front = dq->rear = 0;
+                } else {
+                    dq->rear = (dq->rear + 1) % MAX; 
+                }
+                strcpy(dq->items[dq->rear], value);
+                printf("Inserted '%s' at rear.\n", value);
+            }
+            
+            char* deleteFront(struct Deque* dq) {
+                if (isEmpty(dq)) {
+                    printf("Deque is empty. Cannot delete from front.\n");
+                    return NULL; 
+                }
+                char* item = dq->items[dq->front];
+                if (dq->front == dq->rear) {
+                    dq->front = dq->rear = -1; 
+                } else {
+                    dq->front = (dq->front + 1) % MAX; 
+                }
+                return item;
+            }
+            
+            char* deleteRear(struct Deque* dq) {
+                if (isEmpty(dq)) {
+                    printf("Deque is empty. Cannot delete from rear.\n");
+                    return NULL;
+                }
+                char* item = dq->items[dq->rear];
+                if (dq->front == dq->rear) {
+                    dq->front = dq->rear = -1; 
+                } else {
+                    dq->rear = (dq->rear - 1 + MAX) % MAX; 
+                }
+                return item;
+            }
+            
+            char* peekFront(struct Deque* dq) {
+                if (isEmpty(dq)) {
+                    printf("Deque is empty. Cannot peek front.\n");
+                    return NULL;
+                }
+                return dq->items[dq->front];
+            }
+            
+            char* peekRear(struct Deque* dq) {
+                if (isEmpty(dq)) {
+                    printf("Deque is empty. Cannot peek rear.\n");
+                    return NULL;
+                }
+                return dq->items[dq->rear];
+            }
+            
+            int main() {
+                struct Deque* dq = createDeque();
+                int choice;
+                char value[100];
+            
+                while (1) {
+                    printf("\n1. Insert at Front\n2. Insert at Rear\n3. Delete from Front\n4. Delete from Rear\n5. Peek Front\n6. Peek Rear\n7. Exit\n");
+                    printf("Enter your choice: ");
+                    scanf("%d", &choice);
+                    getchar(); 
+            
+                    switch (choice) {
+                        case 1:
+                            printf("Enter string to insert at front: ");
+                            gets(value);
+                            value[strcspn(value, "\n")] = 0; 
+                            insertFront(dq, value);
+                            break;
+                        case 2:
+                            printf("Enter string to insert at rear: ");
+                            gets(value);
+                            value[strcspn(value, "\n")] = 0; 
+                            insertRear(dq, value);
+                            break;
+                        case 3:
+                            char* deletedValueFront = deleteFront(dq);
+                            if (deletedValueFront) {
+                                printf("Deleted from front: '%s'\n", deletedValueFront);
+                            }
+                            break;
+                        case 4:
+                            char* deletedValueRear = deleteRear(dq);
+                            if (deletedValueRear) {
+                                printf("Deleted from rear: '%s'\n", deletedValueRear);
+                            }
+                            break;
+                        case 5:
+                            char* peekedValueFront = peekFront(dq);
+                            if (peekedValueFront) {
+                                printf("Front element: '%s'\n", peekedValueFront);
+                            }
+                            break;
+                        case 6:
+                            char* peekedValueRear = peekRear(dq);
+                            if (peekedValueRear) {
+                                printf("Rear element: '%s'\n", peekedValueRear);
+                            }
+                            break;
+                        case 7:
+                            free(dq);
+                            exit(0);
+                        default:
+                            printf("Invalid choice. Please try again.\n");
+                    }
+                }
+            
+                return 0;
+            }
+            
+             
+            
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+        1. Insert at Front
+        2. Insert at Rear
+        3. Delete from Front
+        4. Delete from Rear
+        5. Peek Front
+        6. Peek Rear
+        7. Exit
+        Enter your choice: 1
+        Enter string to insert at front: ku
+        Inserted 'ku' at front.
+        
+        1. Insert at Front
+        2. Insert at Rear
+        3. Delete from Front
+        4. Delete from Rear
+        5. Peek Front
+        6. Peek Rear
+        7. Exit
+        Enter your choice: 2
+        Enter string to insert at rear: um
+        Inserted 'um' at rear.
+        
+        1. Insert at Front
+        2. Insert at Rear
+        3. Delete from Front
+        4. Delete from Rear
+        5. Peek Front
+        6. Peek Rear
+        7. Exit
+        Enter your choice: 4
+        Deleted from rear: 'um'
+        
+        1. Insert at Front
+        2. Insert at Rear
+        3. Delete from Front
+        4. Delete from Rear
+        5. Peek Front
+        6. Peek Rear
+        7. Exit
+        Enter your choice: 7
+        
+        
+        === Code Execution Successful ===
+    </pre>
+    <a href="main.html" target="mainFrame" class="button">BACK TO PROGRAM SECTION</a>
+</body>
+</html>
+
+
+
+
